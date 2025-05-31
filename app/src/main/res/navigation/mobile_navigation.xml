@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_account"
-        android:name="com.xcu.kai.ui.dashboard.DashboardFragment"
+        android:name="com.xcu.kai.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_account" />
 
     <fragment
         android:id="@+id/navigation_home"

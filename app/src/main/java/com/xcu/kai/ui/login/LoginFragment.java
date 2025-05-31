@@ -30,8 +30,29 @@ public class LoginFragment extends Fragment {
         TextInputEditText loAccountInput = view.findViewById(R.id.lo_account);
         TextInputEditText loPasswordInput = view.findViewById(R.id.lo_password);
 
-        Button signUpButton = view.findViewById(R.id.btn_Register);
+        // 接收从注册页面传递过来的账号
+        getParentFragmentManager().setFragmentResultListener("register_data", this, (requestKey, result) -> {
+            if (requestKey.equals("register_data")) {
+                String account = result.getString("account");
+                if (account != null) {
+                    loAccountInput.setText(account);
+                    // 将焦点移到密码输入框
+                    view.findViewById(R.id.lo_password).requestFocus();
+                }
+            }
+        });
+
         Button loginButton = view.findViewById(R.id.btn_Login);
+        Button signUpButton = view.findViewById(R.id.btn_Register);
+
+        loginButton.setOnClickListener(v -> {
+           loAccountInput.clearFocus();
+           loPasswordInput.clearFocus();
+           //TODO: 登录逻辑
+
+
+        });
+
         signUpButton.setOnClickListener(v -> {
             //页面跳转page_login.xml文件中的fragment标签的id
             Navigation.findNavController(v).navigate(R.id.action_login_to_register);

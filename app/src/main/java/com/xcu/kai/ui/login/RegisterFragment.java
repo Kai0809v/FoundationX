@@ -1,8 +1,6 @@
 package com.xcu.kai.ui.login;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +10,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.xcu.kai.InputValidator;
 import com.xcu.kai.R;
+import com.xcu.kai.data.AppDatabase;
+import com.xcu.kai.data.User;
 
 import java.util.Objects;
 
@@ -55,21 +56,28 @@ public class RegisterFragment extends Fragment {
         );
 
 
-        TextInputLayout accountLayout = view.findViewById(R.id.RQ_account); // 获取TextInputLayout
+        //获取几个输入框的TextInputLayout
+        //TextInputLayout accountLayout = view.findViewById(R.id.RQ_account); // 获取TextInputLayout，这里不需要这个框显示错误信息，所以不声明
         TextInputLayout passwordLayout = view.findViewById(R.id.RQ_password); // 获取TextInputLayout
         TextInputLayout confirmLayout = view.findViewById(R.id.RQ_confirm); // 获取TextInputLayout
         signUpButton.setOnClickListener(v -> {
-            if(rePasswordInput.getText().toString().equals(reConfirmInput.getText().toString())){
+
+            //让输入框失去焦点
+            reAccountInput.clearFocus();
+            rePasswordInput.clearFocus();
+            reConfirmInput.clearFocus();
+
+            if(rePasswordInput.getText().toString().equals(reConfirmInput.getText().toString())){//有InputValidator，这里不会产生 'NullPointerException'
                 passwordLayout.setErrorEnabled(false);
                 confirmLayout.setErrorEnabled(false);
 
-                    //reAccountInput.setError("账号不能为空");
+
                     saveInLocal();
-                    //Navigation.findNavController(v).navigate(R.id.action_register_to_login);//注册成功后跳转到登录页面
+
 
 
             }else{
-                //passwordInput.setError("两次密码不一致");
+                //错误提示，由于用的material3，所以这里用passwordLayout.setError()方法，而不是.setErrorEnabled()方法或passwordInput.setError("不一致");
                 passwordLayout.setError(getText(R.string.tips_confirm));
                 confirmLayout.setError(getString(R.string.tips_confirm));
             }
@@ -88,10 +96,53 @@ public class RegisterFragment extends Fragment {
 
 
     private void saveInLocal() {
-        // 保存用户信息到本地
-        // 这里可以使用 SharedPreferences 或其他存储方式
-        //Toast.makeText(getContext(), "欸嘿，不给你注册（还没做出来）", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), "欸嘿，不给你注册\n（还没做出来）", Toast.LENGTH_LONG).show();
+        final String account = Objects.requireNonNull(reAccountInput.getText()).toString().trim();
+        final String rawPassword = Objects.requireNonNull(rePasswordInput.getText()).toString().trim();
 
+        // 后台线程处理数据库操作
+        new Thread(() -> {
+            AppDatabase db = AppDatabase.getInstance(requireContext());
+            User existingUser = db.userDao().getUserByAccount(account);
+
+            requireActivity().runOnUiThread(() -> {
+                if (existingUser != null) {
+                    Toast.makeText(getContext(), "账号已存在", Toast.LENGTH_SHORT).show();
+                } /*else if (rawPassword.length() < 6) {
+                    Toast.makeText(getContext(), "密码至少6位", Toast.LENGTH_SHORT).show();
+                }*/ else {
+                    // 生成安全哈希密码，对储存的账户、密码进行加密
+                    /*加密，暂时使用明文
+                    final String hashedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+                    final User newUser = new User(account, hashedPassword);
+                    */
+                    final User newUser = new User(account, rawPassword);
+
+                    // 插入数据库
+                    new Thread(() -> {
+                        db.userDao().insert(newUser);
+                        requireActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
+
+                            String temp = reAccountInput.getText().toString();
+                            // 创建Bundle传递参数
+                            Bundle bundle = new Bundle();
+                            bundle.putString("account", temp);
+                            /*清空输入框，返回后自动清除，注释掉
+                            reAccountInput.setText("");
+                            rePasswordInput.setText("");
+                            reConfirmInput.setText("");
+                             */
+                            // 导航到登录页并传递参数
+                            /*Navigation.findNavController(requireView())
+                                    .navigate(R.id.loginFragment, bundle);
+                             */
+                            getParentFragmentManager()
+                                    .setFragmentResult("register_data", bundle);
+                            Navigation.findNavController(requireView()).navigateUp();
+                        });
+                    }).start();
+                }
+            });
+        }).start();
     }
 }

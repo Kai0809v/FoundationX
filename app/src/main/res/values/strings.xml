@@ -3,6 +3,7 @@
     <string name="title_home">主页</string>
     <string name="title_account">账户</string>
     <string name="title_notifications">设置</string>
+    <string name="title_register">测试阶段，账号注册数据仅保留在本地</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_account">账户</string>
