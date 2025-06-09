@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.xcu.kai.InputValidator;
+import com.xcu.kai.utilities.InputValidator;
 import com.xcu.kai.R;
 
 public class LoginFragment extends Fragment {

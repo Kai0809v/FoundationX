@@ -1,4 +1,4 @@
-package com.xcu.kai;
+package com.xcu.kai.utilities;
 
 import android.text.Editable;
 import android.text.TextWatcher;

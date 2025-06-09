@@ -25,17 +25,19 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //
-        binding.toLogin.setOnClickListener(new View.OnClickListener() {
+
+        final TextView textView = binding.textHome;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        TextView textView1 = binding.textHome2;
+        textView1.setText("该做些什么呢");
+        textView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toLogin = new Intent(getActivity(), LoginActivity.class);
                 startActivity(toLogin);
             }
         });
-
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         return root;
     }

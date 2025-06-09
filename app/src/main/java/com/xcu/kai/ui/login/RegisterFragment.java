@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.xcu.kai.InputValidator;
+import com.xcu.kai.utilities.InputValidator;
 import com.xcu.kai.R;
 import com.xcu.kai.data.AppDatabase;
 import com.xcu.kai.data.User;
@@ -132,7 +132,7 @@ public class RegisterFragment extends Fragment {
                             rePasswordInput.setText("");
                             reConfirmInput.setText("");
                              */
-                            // 导航到登录页并传递参数
+                            // 导航到登录页并传递参数。这个方法不是返回式的，返回到原界面需返回两次
                             /*Navigation.findNavController(requireView())
                                     .navigate(R.id.loginFragment, bundle);
                              */

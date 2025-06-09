@@ -26,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".data.UserListActivity"
+            android:label="@string/title_users"
+            android:parentActivityName=".ui.account.AccountFragment">
+        </activity>
     </application>
 
 </manifest>

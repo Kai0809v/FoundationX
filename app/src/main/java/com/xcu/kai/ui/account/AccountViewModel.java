@@ -10,7 +10,7 @@ public class AccountViewModel extends ViewModel {
 
     public AccountViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is account fragment");
+        mText.setValue("This is account fragment此为账户页面\nfrom AccountViewModel");
     }
 
     public LiveData<String> getText() {

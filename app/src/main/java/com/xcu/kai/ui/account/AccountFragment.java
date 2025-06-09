@@ -1,5 +1,6 @@
 package com.xcu.kai.ui.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.xcu.kai.data.UserListActivity;
 import com.xcu.kai.databinding.FragmentAccountBinding;
+import com.xcu.kai.ui.login.LoginActivity;
 
 public class AccountFragment extends Fragment {
 
@@ -30,12 +33,12 @@ public class AccountFragment extends Fragment {
         binding.toLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+                startActivity(toLogin);
+
                 loginState = !loginState;
                 binding.stateLogoutContainer.setVisibility(View.GONE);
                 binding.stateLoginContainer.setVisibility(View.VISIBLE);
-
-                //Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-                //startActivity(toLogin);
             }
         });
         /*
@@ -57,6 +60,11 @@ public class AccountFragment extends Fragment {
                 binding.stateLogoutContainer.setVisibility(View.VISIBLE);
 
             }
+        });
+        binding.accountImage.setOnClickListener(v -> {
+            Intent users = new Intent(getActivity(), UserListActivity.class);
+            startActivity(users);
+
         });
 
         final TextView textView = binding.textAccount;

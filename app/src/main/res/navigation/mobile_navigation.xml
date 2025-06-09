@@ -9,7 +9,7 @@
         android:id="@+id/navigation_account"
         android:name="com.xcu.kai.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account"/>
 
     <fragment
         android:id="@+id/navigation_home"
