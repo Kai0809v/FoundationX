@@ -10,6 +10,7 @@
     <string name="prompt_account">账户</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_confirm_password">确认密码</string>
+    <string name="prompt_key">登录密钥</string>
 
     <string name="tips_account">账户最多16字节</string>
     <string name="tips_password">密码长度最多16字节</string>

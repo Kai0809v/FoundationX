@@ -27,6 +27,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public List<User> getUsers() {
         return users;
     }
+    /** 编辑模式标志位*/
+    private boolean isEditMode = false;
+    /** 设置编辑模式的方法 */
+    public void setEditMode(boolean editMode) {
+        this.isEditMode = editMode;
+        if (!editMode) {
+            clearSelected(); // 退出编辑模式时清空选中状态
+        }
+        notifyDataSetChanged(); // 刷新所有item的复选框可见性
+    }
+
 
     public void setUsers(List<User> users) {
         this.users.clear();
@@ -92,20 +103,41 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         // 优化：使用position判断选中状态
         boolean isSelected = selectedPositions.contains(position);
-        holder.checkBox.setVisibility(isSelected ? View.VISIBLE : View.GONE);
+        holder.checkBox.setVisibility(isEditMode ? View.VISIBLE : View.GONE);  // 编辑模式下显示复选框
         holder.checkBox.setChecked(isSelected);
 
         // 优化：使用已存在的监听器
-        holder.itemView.setOnClickListener(v -> toggleSelection(position));
+        holder.itemView.setOnClickListener(v -> {
+            if (isEditMode) {  // 仅编辑模式下响应点击选中
+                toggleSelection(position);
+            }
+        });
         holder.itemView.setOnLongClickListener(v ->
                 longClickListener != null &&
                         longClickListener.onItemLongClick(v, position)
         );
+        holder.itemView.setOnClickListener(v -> {
+            if (clickListener != null) {
+                clickListener.onItemClick(position);
+            }
+        });
     }
 
     public interface OnItemLongClickListener {
         boolean onItemLongClick(View view, int position);
     }
+    // 在 UserAdapter 中添加
+    private OnItemClickListener clickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.clickListener = listener;
+    }
+
+
 
     @Override
     public int getItemCount() {

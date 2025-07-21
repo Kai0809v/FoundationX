@@ -18,6 +18,7 @@ import com.xcu.kai.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private int lastSelectedId = R.id.navigation_home; // 记录上次选中的ID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +29,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // 设置标签显示模式，显示标签
         navView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
 
         Menu menu = navView.getMenu();
         menu.getItem(0).setTitle(null);
         menu.getItem(2).setTitle(null);
 
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_account,R.id.navigation_home,  R.id.navigation_notifications)
+                R.id.navigation_account, R.id.navigation_home, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //上面这里定义了NavController，然后下面这里把它和BottomNavigationView绑定起来，
@@ -47,25 +44,55 @@ public class MainActivity extends AppCompatActivity {
         // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);//绑定底部导航栏
 
-        // 添加选中监听器
+        // 添加选中监听器，并添加防止快速重复点击的逻辑
         navView.setOnItemSelectedListener(item -> {
-            // 重置所有项的标题可见性
+            int itemId = item.getItemId();
 
+            // 如果点击的是当前已选中的项，则忽略
+            if (itemId == lastSelectedId) {
+                return false;
+            }
+
+            // 更新最后选中的ID
+            lastSelectedId = itemId;
+
+            // 重置所有标题
             for (int i = 0; i < menu.size(); i++) {
                 menu.getItem(i).setTitle(null);
             }
-            // 设置当前选中项的标题
-            // 根据itemId设置对应的标题
-            if (item.getItemId() == R.id.navigation_home) {
+
+            // 设置新标题
+            if (itemId == R.id.navigation_home) {
                 item.setTitle(getString(R.string.title_home));
-            } else if (item.getItemId() == R.id.navigation_account) {
+            } else if (itemId == R.id.navigation_account) {
                 item.setTitle(getString(R.string.title_account));
-            } else if (item.getItemId() == R.id.navigation_notifications) {
+            } else if (itemId == R.id.navigation_notifications) {
                 item.setTitle(getString(R.string.title_notifications));
             }
 
+            // 执行导航
             return NavigationUI.onNavDestinationSelected(item, navController);
         });
-    }
 
+        // 保留目的地监听器（用于处理返回按钮等情况）
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            // 更新最后选中的ID
+            lastSelectedId = destination.getId();
+
+            // 重置所有标题
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setTitle(null);
+            }
+
+            // 设置当前标题
+            int destId = destination.getId();
+            if (destId == R.id.navigation_home) {
+                menu.findItem(R.id.navigation_home).setTitle(getString(R.string.title_home));
+            } else if (destId == R.id.navigation_account) {
+                menu.findItem(R.id.navigation_account).setTitle(getString(R.string.title_account));
+            } else if (destId == R.id.navigation_notifications) {
+                menu.findItem(R.id.navigation_notifications).setTitle(getString(R.string.title_notifications));
+            }
+        });
+    }
 }

@@ -1,7 +1,9 @@
 package com.xcu.kai.data;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +14,19 @@ import com.xcu.kai.R;
 import com.xcu.kai.utilities.UserAdapter;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class UserListActivity extends AppCompatActivity {
     private UserAdapter adapter;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private static final int PAGE_SIZE = 20;
     private int currentPage = 0;
-    // 添加分页控制标志
     private boolean isLoading = false;
     private boolean hasMore = true;
+    private boolean isEditMode = false;
+    private Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +34,13 @@ public class UserListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_users);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        Button btnDelete = findViewById(R.id.btn_delete);
+        btnDelete = findViewById(R.id.btn_delete);
 
         adapter = new UserAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        // 添加分页滚动监听
+        // 分页滚动监听
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -47,10 +50,9 @@ public class UserListActivity extends AppCompatActivity {
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
-                // 添加分页加载条件
-                if (!isLoading && hasMore) {
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                            && firstVisibleItemPosition >= 0
+                // 优化加载条件
+                if (!isLoading && hasMore && dy > 0) {
+                    if ((firstVisibleItemPosition + visibleItemCount) >= totalItemCount
                             && totalItemCount >= PAGE_SIZE) {
                         loadUsers(currentPage + 1);
                     }
@@ -59,16 +61,39 @@ public class UserListActivity extends AppCompatActivity {
         });
 
         adapter.setOnItemLongClickListener((view, position) -> {
-            adapter.toggleSelection(position);
+            if (!isEditMode) {
+                enterEditMode();
+                adapter.toggleSelection(position); // 自动选中长按项
+            }
             return true;
         });
 
-        loadUsers(currentPage);
+        adapter.setOnItemClickListener(position -> {
+            if (isEditMode) {
+                adapter.toggleSelection(position);
+            } else {
+                // 正常点击操作（例如打开详情）
+                openUserDetail(adapter.getUsers().get(position));
+            }
+        });
 
+        loadUsers(currentPage);
         btnDelete.setOnClickListener(v -> deleteSelectedUsers());
     }
 
-    // 提取删除操作为独立方法
+    private void enterEditMode() {
+        isEditMode = true;
+        btnDelete.setVisibility(View.VISIBLE);
+        adapter.setEditMode(true);
+    }
+
+    private void exitEditMode() {
+        isEditMode = false;
+        btnDelete.setVisibility(View.GONE);
+        adapter.setEditMode(false);
+        adapter.clearSelected();
+    }
+
     private void deleteSelectedUsers() {
         List<User> selectedUsers = adapter.getSelectedUsers();
         if (selectedUsers.isEmpty()) return;
@@ -79,9 +104,19 @@ public class UserListActivity extends AppCompatActivity {
                     .deleteUsers(selectedUsers);
 
             runOnUiThread(() -> {
-                adapter.clearSelected();
-                // 优化：重新加载当前页而非总是第0页
-                loadUsers(Math.max(0, currentPage));
+                // 计算删除后是否影响分页
+                int deleteCount = selectedUsers.size();
+                int currentItems = adapter.getItemCount();
+
+                if (deleteCount >= currentItems && currentPage > 0) {
+                    // 如果删除了当前页所有内容，回退到前一页
+                    loadUsers(currentPage - 1);
+                } else {
+                    // 否则重新加载当前页
+                    loadUsers(currentPage);
+                }
+
+                exitEditMode();
             });
         });
     }
@@ -106,22 +141,59 @@ public class UserListActivity extends AppCompatActivity {
                     currentPage = page;
                     hasMore = (offset + PAGE_SIZE) < total;
                     isLoading = false;
+
+                    // 空数据提示
+                    if (users.isEmpty() && page == 0) {
+                        showEmptyView();
+                    } else {
+                        hideEmptyView();
+                    }
                 });
             } else {
                 runOnUiThread(() -> {
                     hasMore = false;
                     isLoading = false;
+                    if (page == 0) showEmptyView();
                 });
             }
         });
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // 添加线程池关闭逻辑
-        if (executor != null && !executor.isShutdown()) {
-            executor.shutdownNow();
+    public void onBackPressed() {
+        if (isEditMode) {
+            exitEditMode();
+        } else {
+            super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (executor != null) {
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    private void showEmptyView() {
+        // 实现空数据状态显示
+    }
+
+    private void hideEmptyView() {
+        // 隐藏空数据状态
+    }
+
+    private void openUserDetail(User user) {
+        // 实现用户详情打开逻辑
+    }
+
 }
