@@ -1,22 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.notifications.NotificationsFragment">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <!-- 顶部卡片 -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:strokeColor="#E0E0E0"
+        app:strokeWidth="1dp"
+        android:layout_marginTop="36dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="36dp">
+
+            <!-- 头像 -->
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/avatar_kai"
+                android:scaleType="centerCrop"
+                android:contentDescription="用户头像"
+                android:background="@drawable/ic_launcher_background"
+                android:layout_marginEnd="16dp"/>
+
+            <!-- 用户名 -->
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未登录用户"
+                android:textSize="16sp"
+                android:textColor="#333"
+                android:layout_toEndOf="@id/ivAvatar"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/btnLogin"/>
+
+            <!-- 登录按钮 -->
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/blue_qq"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:textAllCaps="false"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 功能按钮区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp">
+
+        <!-- 无边框按钮1 -->
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/info"
+            android:textColor="#333"
+            app:icon="@drawable/info"
+            app:iconTint="#666"
+            app:iconPadding="8dp"
+            android:textSize="16sp"
+            app:cornerRadius="0dp"
+            android:gravity="start|center_vertical"/>
+
+        <!-- 分隔线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"/>
+
+        <!-- 无边框按钮2 -->
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="设置"
+            android:textColor="#333"
+            app:icon="@drawable/settings"
+            app:iconTint="#666"
+            app:iconPadding="8dp"
+            android:textSize="16sp"
+            app:cornerRadius="0dp"
+            android:gravity="start|center_vertical"/>
+
+        <!-- 分隔线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"/>
+
+        <!-- 无边框按钮3 -->
+        <!--
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="帮助与反馈"
+            android:textColor="#333"
+            app:icon="@drawable/ic_help"
+            app:iconTint="#666"
+            app:iconPadding="8dp"
+            android:textSize="16sp"
+            app:cornerRadius="0dp"
+            android:gravity="start|center_vertical"/>
+        -->
+
+    </LinearLayout>
+    <!-- fragment被使用的id以驼峰形式在相关代码中被使用 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_Notifications"
+        android:text="测试界面"/>
+</LinearLayout>
