@@ -1,0 +1,5 @@
+2025年8月11日这天我发现as循环输出如下警告：
+* daemon not running; starting now at tcp:5037、* daemon started successfully、Adb connection Error:Connection reset、Sending Tracking request failed!
+
+在长时间摸索过后，我意识到可能是我的梯子工具导致的，至少关掉后就没这种情况了。
+我很迷惑，这是怎么影响到本地回环的呢？真是出乎意料的问题

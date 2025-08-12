@@ -11,7 +11,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
         app:strokeColor="#E0E0E0"
         app:strokeWidth="1dp"
@@ -30,7 +30,7 @@
                 android:src="@drawable/avatar_kai"
                 android:scaleType="centerCrop"
                 android:contentDescription="用户头像"
-                android:background="@drawable/ic_launcher_background"
+                android:background="@drawable/circle"
                 android:layout_marginEnd="16dp"/>
 
             <!-- 用户名 -->
@@ -72,7 +72,7 @@
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:text="@string/info"
             android:textColor="#333"
             app:icon="@drawable/info"
@@ -89,20 +89,21 @@
             android:background="#EEEEEE"/>
 
         <!-- 无边框按钮2 -->
+
+        <!-- 分隔线 -->
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
+            android:gravity="start|center_vertical"
             android:text="设置"
             android:textColor="#333"
-            app:icon="@drawable/settings"
-            app:iconTint="#666"
-            app:iconPadding="8dp"
             android:textSize="16sp"
             app:cornerRadius="0dp"
-            android:gravity="start|center_vertical"/>
+            app:icon="@drawable/settings"
+            app:iconPadding="8dp"
+            app:iconTint="#666" />
 
-        <!-- 分隔线 -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
