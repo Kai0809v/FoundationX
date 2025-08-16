@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,14 +28,19 @@ public class UserListActivity extends AppCompatActivity {
     private boolean hasMore = true;
     private boolean isEditMode = false;
     private Button btnDelete;
+    private TextView tvEmpty; // 空数据提示TextView的引用
+    private RecyclerView recyclerView;
+    //final关键字用于表示一个变量只能被赋值一次
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        //RecyclerView
+        recyclerView = findViewById(R.id.recycler_view);
         btnDelete = findViewById(R.id.btn_delete);
+        tvEmpty = findViewById(R.id.tv_empty);
 
         adapter = new UserAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -183,13 +189,15 @@ public class UserListActivity extends AppCompatActivity {
             }
         }
     }
-
+    /** 实现空数据状态显示 */
     private void showEmptyView() {
-        // 实现空数据状态显示
+        tvEmpty.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
-
+    /** 隐藏空数据状态*/
     private void hideEmptyView() {
-        // 隐藏空数据状态
+        tvEmpty.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     private void openUserDetail(User user) {

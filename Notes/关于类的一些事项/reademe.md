@@ -1,3 +1,11 @@
+# 自制类的导入
+自制工具类文件顶部的包声明要与文件在项目中的实际路径相匹配<br>
+例如我将类LinkSpanUtil.java放在com.xcu.kai.utilities包下，那么这个类的顶部声明应该是：
+```
+package com.xcu.kai.utilities;
+```
+
+# 导入类的原则
 当需要导入的类有多个选项时，通常遵循以下原则：
 优先选择androidx包下的类，因为它是Android官方推荐的包，包含了最新的功能和改进。
 如果没有androidx包下的类，选择android包下的官方类，这些类通常是Android官方提供的，具有广泛的兼容性。

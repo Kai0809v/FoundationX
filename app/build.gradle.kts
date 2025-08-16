@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Room数据库
-    val room_version = "2.7.1"
+    val room_version = "2.7.2"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 }
