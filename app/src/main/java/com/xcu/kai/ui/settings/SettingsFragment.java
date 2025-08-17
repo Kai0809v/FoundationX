@@ -43,7 +43,7 @@ public class SettingsFragment extends Fragment {
             startActivity(dev);
         });
 
-        final TextView textView = binding.textNotifications;
+        final TextView textView = binding.textSettings;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
