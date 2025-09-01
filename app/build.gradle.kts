@@ -17,6 +17,16 @@ android {
         signingConfig = signingConfigs.getByName("debug")
     }
 
+
+    sourceSets {
+        named("main") {
+            res.srcDirs(
+                "src/main/res",
+                "src/main/r-a"
+            )
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
