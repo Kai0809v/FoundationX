@@ -13,15 +13,25 @@
         android:layout_marginTop="36dp"/>
         <!-- padding预留按钮空间 -->
         <!-- 以后使用React Native动态获取状态栏的高度，替换marginTop -->
-    <!-- TODO: 或将这个换成容器以展示更多内容，如图片加文字-->
-    <TextView
-        android:id="@+id/tv_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="没有数据"
-        android:textSize="18sp"
-        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/RQ_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible">
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/no_data" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="没有数据"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 
     <!-- 自定义样式的固定按钮 -->

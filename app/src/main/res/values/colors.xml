@@ -65,7 +65,7 @@
     <color name="md_theme_surfaceBright">#F9F9FF</color>
     <color name="md_theme_surfaceContainerLowest">#FFFFFF</color>
     <color name="md_theme_surfaceContainerLow">#F3F3FA</color>
-    <color name="md_theme_surfaceContainer">#EDEDF4</color>
+    <color name="md_theme_surfaceContainer">#EDEDF6</color>
     <color name="md_theme_surfaceContainerHigh">#E8E7EE</color>
     <color name="md_theme_surfaceContainerHighest">#E2E2E9</color>
     <color name="md_theme_primary_mediumContrast">#153566</color>
