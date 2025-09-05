@@ -7,10 +7,10 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_account"
-        android:name="com.xcu.kai.ui.account.AccountFragment"
-        android:label="@string/title_account"
-        tools:layout="@layout/fragment_account">
+        android:id="@+id/navigation_utils"
+        android:name="com.xcu.kai.ui.utils.UtilsFragment"
+        android:label="@string/title_utils"
+        tools:layout="@layout/fragment_utils">
         <action
             android:id="@+id/action_navigation_account_to_navigation_home"
             app:destination="@id/navigation_home" />

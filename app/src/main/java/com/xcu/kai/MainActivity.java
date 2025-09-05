@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         menu.getItem(2).setTitle(null);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_account, R.id.navigation_home, R.id.navigation_notifications)
+                R.id.navigation_utils, R.id.navigation_home, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //上面这里定义了NavController，然后下面这里把它和BottomNavigationView绑定起来，
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
             // 设置新标题
             if (itemId == R.id.navigation_home) {
                 item.setTitle(getString(R.string.title_home));
-            } else if (itemId == R.id.navigation_account) {
-                item.setTitle(getString(R.string.title_account));
+            } else if (itemId == R.id.navigation_utils) {
+                item.setTitle(getString(R.string.title_utils));
             } else if (itemId == R.id.navigation_notifications) {
                 item.setTitle(getString(R.string.title_notifications));
             }
@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
             int destId = destination.getId();
             if (destId == R.id.navigation_home) {
                 menu.findItem(R.id.navigation_home).setTitle(getString(R.string.title_home));
-            } else if (destId == R.id.navigation_account) {
-                menu.findItem(R.id.navigation_account).setTitle(getString(R.string.title_account));
+            } else if (destId == R.id.navigation_utils) {
+                menu.findItem(R.id.navigation_utils).setTitle(getString(R.string.title_utils));
             } else if (destId == R.id.navigation_notifications) {
                 menu.findItem(R.id.navigation_notifications).setTitle(getString(R.string.title_notifications));
             }

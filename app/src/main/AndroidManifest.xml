@@ -36,7 +36,7 @@
         <activity
             android:name=".data.UserListActivity"
             android:label="@string/title_users"
-            android:parentActivityName=".ui.account.AccountFragment" />
+            android:parentActivityName=".ui.utils.UtilsFragment" />
     </application>
 
 </manifest>

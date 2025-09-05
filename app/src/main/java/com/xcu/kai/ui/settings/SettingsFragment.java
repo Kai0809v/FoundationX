@@ -17,7 +17,7 @@ import com.xcu.kai.ui.login.LoginActivity;
 
 public class SettingsFragment extends Fragment {
 
-    private FragmentSettingsBinding binding;
+    private FragmentSettingsBinding binding;//绑定，根据对应xml文件自动生成的，fragment_settings-->FragmentSettings+Binding
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

@@ -11,15 +11,17 @@
     <color name="blue_dark2">#0D47A1</color>
     <color name="blue_to_white">#E1F5FE</color>
 
+    <!-- 背景色 -->
+    <color name="background">#F5F7FA</color>
 
-    <color name="purple_50">#FFF3E5F5</color>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- 卡片颜色 -->
+    <color name="card_years">#4A6CF7</color>
+    <color name="card_months">#30B77E</color>
+    <color name="card_days">#FF5722</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="teal_700">#0097A7</color>
 
     <color name="md_theme_primary">#425E91</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
