@@ -5,71 +5,152 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-
+    <!-- 居中内容区域 txt36sp-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1">
 
-        <!-- 新增按钮区域 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:cornerRadius="8dp"
-            android:padding="8dp">
+        <TextView
+            android:id="@+id/text_show"
+            android:layout_width="365dp"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:text="文本"
+            android:textSize="36sp" />
 
-            <Button
-                android:id="@+id/h_btn1"
-                style="@style/h_btn_s"
-                android:text="按钮1"
-/>
 
-            <!-- 其他三个按钮结构相同，仅id不同 -->
-            <Button
-                android:id="@+id/h_btn2"
-                style="@style/h_btn_s"
-                android:text="按钮2"/>
-
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-        <Button
-            android:id="@+id/h_btn3"
-            style="@style/h_btn_s"
-            android:text="按钮3"/>
-        <Button
-            android:id="@+id/h_btn4"
-            style="@style/h_btn_s"
-            android:text="按钮4"/>
-        </LinearLayout>
-
-        <!-- 原有TextView移动到页脚 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground">
-
-            <TextView
-                android:id="@+id/text_home"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:layout_margin="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
-            <TextView
-                android:id="@+id/text_home2"
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- 折叠部分 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <!-- 左侧文字区域 -->
+                        <TextView
+                            android:id="@+id/tvStart"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="点击右侧箭头展开输入框"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"/>
+
+                        <!-- 右侧展开图标 -->
+                        <ImageView
+                            android:id="@+id/ivExpand"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_expand_more"
+                            android:scaleType="fitCenter"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/expandLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/etInputLayout1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            app:boxBackgroundMode="outline"
+                            app:boxCornerRadiusBottomEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusTopStart="8dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="显示内容"
+                                android:inputType="text" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <!-- 操作按钮 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/cancelButton"
+                                style="?attr/borderlessButtonStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:text="取消" />
+
+                            <Button
+                                android:id="@+id/saveButton"
+                                style="?attr/borderlessButtonStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="保存" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- 背景蒙层（初始隐藏，展开时显示） -->
+            <View
+                android:id="@+id/overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80000000"
+                android:visibility="gone"/>
+
+            <!-- 页脚区域 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:layout_marginTop="8dp"/>
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/text_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/text_home2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
+
+
 </ScrollView>

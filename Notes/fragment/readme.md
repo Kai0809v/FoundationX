@@ -1,4 +1,17 @@
-# 我在这个项目中，在fragment使用视图绑定（自动生成绑定类），创建布局的步骤是这样的：
+# 我在这个项目中，在fragment使用视图绑定（自动生成绑定类）
+- 启用了View Binding（在build.gradle中）
+- ## 注意不是Data Binding
+- 不用以下面这种方式来绑定(将fragment_new.xml布局绑定到NewFragment.java)
+- ```java
+  @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // 使用您的布局文件
+        return inflater.inflate(R.layout.fragment_new, container, false);
+    }//这样不用findById了
+  ```
+
+# 创建布局的步骤是这样的：
 - activity java  -> activity xml（或自动绑定，规则如下），内有fragment（作为容器），包括了不同fragments组成的navGraph（@navigation/··.xml，包含导航）
 - fragment java -> 绑定对应xml文件，生成绑定类（Fragment+Binding），对fragment内部的控件进行操作，其实也可以在activity中一块操作，只是在fragment中
 
