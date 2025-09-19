@@ -26,11 +26,12 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+// 依赖解析管理
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
 
-        // 阿里云镜像（覆盖 Maven Central、Google、JCenter 等）
+        // 阿里云镜像（覆盖 Maven Central、Google、JCenter等）
         maven { setUrl("https://maven.aliyun.com/repository/public/") }
         maven { setUrl("https://maven.aliyun.com/repository/google/") }
         maven { setUrl("https://maven.aliyun.com/repository/jcenter/") }
